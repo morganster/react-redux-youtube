@@ -11,9 +11,16 @@ const initialState = {
         },
         initial: true
     },
-    videoList: [],
-    pause: false,
+    videoList: { 
+                etag: "",
+                items: [],
+                kind: "",
+                nextPageToken: "",
+                pageInfo:{},
+                regionCode: ""
+    },
     requesting: false,
+    nextPlayRequesting: false,
 };
 
 export function videos(state = initialState, action) {
@@ -22,14 +29,15 @@ export function videos(state = initialState, action) {
             return {
                 ...state,
                 requesting: true,
-                videoList: []
+                videoList: {}
             };
         case videoConstants.SEARCH_SUCCESS:
-            return Object.assign({}, state,{
+            return {...state,
                 requesting: false,
-                videoList: action.videos,
-                videoSelected: state.videoSelected.initial?action.videos.items[0]:state.videoSelected
-            });
+                videoList: action.result.videos,
+                nextPlayRequesting: action.result.nextVid,
+                videoSelected: state.videoSelected.initial?action.result.videos.items[0]:state.videoSelected
+            };
         case videoConstants.SEARCH_FAILURE:
             return Object.assign({}, state,{
                 requesting: false,
@@ -42,7 +50,8 @@ export function videos(state = initialState, action) {
         case videoConstants.SELECT_SUCCESS:
             return Object.assign({}, state,{
                 requesting: false,
-                videoSelected: action.video
+                videoSelected: action.video,
+                nextPlayRequesting: false,
             });
         case videoConstants.SELECT_FAILURE:
             return Object.assign({}, state,{

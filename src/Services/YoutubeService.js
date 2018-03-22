@@ -8,7 +8,7 @@ export class YouTubeService {
       var options={
               // channelId : 'UC2Lg_JM84ehrW4bs85SWtLw',
               maxResults :20,
-              key: '',
+              key: 'AIzaSyDaKQ5Wk5C4KLF81e8L2uD6kjOamlFYxn0',
               type:'video'
           }
       if(related){

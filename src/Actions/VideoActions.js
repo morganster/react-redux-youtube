@@ -4,7 +4,8 @@ import { videoConstants } from '../Constants';
  let ytService = new YouTubeService();
 export const videoActions = {
     select,
-    search
+    search,
+    nextVideo,
 };
 
 function select(video) {
@@ -27,11 +28,33 @@ function select(video) {
 
 
 // term is the search string, related is if look for the related videos to an id if true the term is de video id, default to false
-function search(term, related = false) {
+function search(term, related = false, nextVid = false) {
     return dispatch => {
-        dispatch(request(term, related));
+        dispatch(request(term));
 
         ytService.getVideosFromApi(term, related)
+            .then(
+                videos => {
+                    dispatch(success({videos, nextVid}));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+
+    function request(term) { return { type: videoConstants.SEARCH_REQUEST, term } }
+
+    function success(result) { return { type: videoConstants.SEARCH_SUCCESS, result }}
+
+    function failure(error) { return { type: videoConstants.SEARCH_FAILURE, error } }
+}
+
+function nextVideo(term){
+    return dispatch => {
+        dispatch(request(term));
+
+        ytService.getVideosFromApi(term, true)
             .then(
                 videos => {
                     dispatch(success(videos));
@@ -48,5 +71,3 @@ function search(term, related = false) {
 
     function failure(error) { return { type: videoConstants.SEARCH_FAILURE, error } }
 }
-
-

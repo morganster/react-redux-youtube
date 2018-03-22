@@ -3,7 +3,9 @@ import React from 'react';
 const ListItem = (props) => {
   const styles = {
     container: {
-      position: 'relative'
+      position: 'relative',
+      padding: '0.2em',
+      backgroundColor: ''
     },
     title:{
       color: '#fff',

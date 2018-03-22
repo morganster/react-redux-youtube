@@ -21,18 +21,45 @@ import {
  import { videoActions } from '../Actions';
 
 class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: '',
+        };
+    }
+    
     componentDidMount() {
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.nextVid = this.nextVid.bind(this);
     }
-
-    handleKeyPress(e){
+    componentDidUpdate() {
+       if(!this.props.videos.requesting && this.props.videos.nextPlayRequesting){
+            this.props.dispatch(videoActions.select(this.props.videos.videoList.items[0]));
+        }
+    }
+    handleKeyPress(e) {
         if (e.key === 'Enter') {
-            this.props.dispatch(videoActions.search(e.target.value, false));
+            this.props.dispatch(videoActions.search(this.state.search, false));
           }
     }
 
+    handleClick() {
+        this.props.dispatch(videoActions.search(this.state.search, false));
+    }
+
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    }
+
+    nextVid(event) {
+                this.props.dispatch(videoActions.search(this.props.videos.videoList.items[0].id.videoId, true,true));
+    }
+
     render() {
- 
+        const { search } = this.state;
         return (
             <div>
                  <Navbar color="faded" light expand="md">
@@ -42,8 +69,8 @@ class HomePage extends React.Component {
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
                                 <InputGroup>
-                                    <Input placeholder="Search" onKeyPress={(e) => this.handleKeyPress(e)}/>
-                                    <InputGroupAddon addonType="append"><Button color="secondary"><i className="fa fa-search"></i></Button></InputGroupAddon>
+                                    <Input placeholder="Search" onKeyPress={(e) => this.handleKeyPress(e)} name="search" value={search} onChange={this.handleChange} />
+                                    <InputGroupAddon addonType="append"><Button onClick={this.handleClick} color="secondary"><i className="fa fa-search"></i></Button></InputGroupAddon>
                                 </InputGroup>
                                 </NavItem>
                             <NavItem>
@@ -55,7 +82,7 @@ class HomePage extends React.Component {
                 <Container style={ {backgroundColor: '#333'}} fluid={true}>
                     <Row>
                         <Col xs="12" sm="12" >
-                            <YoutubePlayer />
+                            <YoutubePlayer onEnd={this.nextVid} />
                         </Col>
                     </Row>
                     <Row>
