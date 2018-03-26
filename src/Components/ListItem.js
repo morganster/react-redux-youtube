@@ -1,37 +1,55 @@
 import React from 'react';
+import {
+  Col,
+  Row,
+  } from 'reactstrap';
 
 const ListItem = (props) => {
   const styles = {
     container: {
       position: 'relative',
       padding: '0.2em',
-      backgroundColor: ''
+      backgroundColor: '#555',
+      margin: '15px 0',
+      borderRadius: '5px',
     },
     title:{
       color: '#fff',
-      position: 'absolute',
       textAlign: 'center',
       top: '0.2em',
       fontSize: '1.4em'
     },
     subtitle:{
       color: '#fff',
-      position: 'absolute',
       bottom: '0.05em',
       right: '0.05em',
       fontSize: '0.95em'
+    },
+    description:{
+      color: '#fff',
+      bottom: '0.05em',
+      right: '0.05em',
+      fontSize: '0.85em'
     },
     image: {
       cursor: 'pointer'
     }
   };
     return(
-      <div onClick={props.onClick} style={styles.container}> 
-        <p style={styles.title}>{props.title}</p>
-        <p style={styles.subtitle}>{props.subtitle}</p>
-        <span>{props.duration}</span>
-        <img src={props.thumbnail} alt={props.title} style={styles.image}/>
-     </div>
+      <Row onClick={props.onClick} style={styles.container}> 
+        <Col>
+            <div>
+                <img src={props.thumbnail} alt={props.title} style={styles.image}/>
+            </div>
+        </Col>
+        <Col>
+            <div>
+              <p style={styles.title}>{props.title}</p>
+              <p style={styles.subtitle}>{props.subtitle}</p>
+              <p style={styles.description}>{props.description}</p>
+            </div>
+        </Col>
+     </Row>
     )
   }
 

@@ -2,6 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { videoActions } from '../Actions';
 import ListItem from './ListItem';
+import {
+    Col,
+    Row,
+    } from 'reactstrap';
+
 
 class VideoList extends React.Component {
     componentDidMount(props){
@@ -21,33 +26,22 @@ class VideoList extends React.Component {
 
 
     render() {
-        const styles = {
-            root: {
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-around',
-            },
-            gridList: {
-                display: 'flex',
-                flexWrap: 'nowrap',
-                overflowX: 'auto',
-            },
-            image:{
-                cursor:'pointer'
-            }
-          };
         return (
-            <div style={styles.root}>   
+            <Row>  
+
                     { this.props.videos.videoList.items && this.props.videos.videoList.items.map((video) => {
-                    return   <ListItem
-                                key={video.id.videoId}
-                                title={video.snippet.title}
-                                subtitle={video.snippet.channelTitle}
-                                onClick={(e) => this.selectVid(video, e)} 
-                                thumbnail={video.snippet.thumbnails.medium.url}>
-                            </ListItem>
+                    return <Col lg='3'>
+                                <ListItem
+                                        key={video.id.videoId}
+                                        title={video.snippet.title}
+                                        subtitle={video.snippet.channelTitle}
+                                        description={video.snippet.description}
+                                        onClick={(e) => this.selectVid(video, e)} 
+                                        thumbnail={video.snippet.thumbnails.medium.url}>
+                                </ListItem>
+                            </Col>
                     }) }
-            </div>);
+            </Row>);
         
     }
 }

@@ -2,6 +2,7 @@
   "name": "youtube-react-redux-channel",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://morganster.github.io/yatube",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",

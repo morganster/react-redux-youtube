@@ -6,31 +6,46 @@ import {
     CardBody,
     CardText,
     CardTitle,
-    CardSubtitle } from 'reactstrap';
+    CardSubtitle,
+     } from 'reactstrap';
 
 
 import * as moment from 'moment';
 
 class YoutubePlayer extends React.Component {
-    componentDidMount() {
-        let youtubeWidth = document.getElementById('youtubeFrame').offsetWidth * 0.99;
-        this.opts = {
-            height: youtubeWidth*0.57,
-            width: youtubeWidth,
-            playerVars: { // https://developers.google.com/youtube/player_parameters
-              autoplay: 1
-            }
-          };
-    }
 
+    componentDidMount() {
+        window.addEventListener("resize", this.resize.bind(this));
+        this.resize();
+        
+        this.opts = {
+            height: '100%',
+            width: '100%',
+            playerVars: { // https://developers.google.com/youtube/player_parameters
+                autoplay: 1
+            }
+        };
+    }
+    
+    resize(){
+        this.youtubeWidth = document.getElementById('youtube-player__Frame').offsetWidth;
+    }
+    
     render() {
-        const styles = {
-            padding: '0.5em 3em'
+        this.styles = {
+            padding: '0.5em 3em',
+            height: this.youtubeWidth * 0.57,
+            backgroundColor: '#222',
+            color: '#f3f3f3'
         };
         return (
-            <div style={styles}>
-                 <Card id="youtubeFrame" style={{backgroundColor: '#222', color: '#f3f3f3'}}>
-                     <YouTube  videoId={this.props.videos.videoSelected.id.videoId} opts={this.opts} onEnd={this.props.onEnd}/>
+            <div>
+                 <Card id="youtube-player__Frame" style={this.styles}>
+                        <CardBody>
+                            <YouTube  videoId={this.props.videos.videoSelected.id.videoId} opts={this.opts} onEnd={this.props.onEnd}/>
+                        </CardBody>
+                 </Card>
+                 <Card id="youtube-player__info" style={{backgroundColor: '#222', color: '#f3f3f3'}}>
                         <CardBody>
                             <CardTitle>{this.props.videos.videoSelected.snippet.title}</CardTitle>
                             <CardSubtitle>{this.props.videos.videoSelected.snippet.channelTitle}</CardSubtitle>

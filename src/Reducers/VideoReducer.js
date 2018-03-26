@@ -1,16 +1,7 @@
 import { videoConstants } from '../Constants';
 
 const initialState = {
-    videoSelected: { 
-        id: {
-            videoId: "L-xvMsEw3LE"
-        },
-        snippet:{
-            title:"dummy",
-            description:""
-        },
-        initial: true
-    },
+    videoSelected: { },
     videoList: { 
                 etag: "",
                 items: [],
@@ -32,31 +23,35 @@ export function videos(state = initialState, action) {
                 videoList: {}
             };
         case videoConstants.SEARCH_SUCCESS:
-            return {...state,
+            return {
+                ...state,
                 requesting: false,
                 videoList: action.result.videos,
                 nextPlayRequesting: action.result.nextVid,
-                videoSelected: state.videoSelected.initial?action.result.videos.items[0]:state.videoSelected
             };
         case videoConstants.SEARCH_FAILURE:
-            return Object.assign({}, state,{
+            return {
+                ...state,
                 requesting: false,
                 videoList: []
-            });
+                };
         case videoConstants.SELECT_REQUEST:
-            return Object.assign({}, state,{
+            return {
+                    ...state,
                     requesting: true,
-                   });
+                   };
         case videoConstants.SELECT_SUCCESS:
-            return Object.assign({}, state,{
+            return {
+                ...state,
                 requesting: false,
                 videoSelected: action.video,
                 nextPlayRequesting: false,
-            });
+            };
         case videoConstants.SELECT_FAILURE:
-            return Object.assign({}, state,{
+            return {
+                ...state,
                 requesting: false,
-            });
+            };
         default:
             return state
     }

@@ -6,9 +6,8 @@ export class YouTubeService {
     
     getVideosFromApi(searchTerm, related) {
       var options={
-              // channelId : 'UC2Lg_JM84ehrW4bs85SWtLw',
-              maxResults :20,
-              key: 'AIzaSyDaKQ5Wk5C4KLF81e8L2uD6kjOamlFYxn0',
+             maxResults :10,
+              key: 'here-goes-your-token',
               type:'video'
           }
       if(related){

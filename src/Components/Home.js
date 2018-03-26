@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { YoutubePlayer } from './YoutubePlayer';
 import { VideoList } from './VideoList';
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
@@ -62,10 +60,8 @@ class HomePage extends React.Component {
         const { search } = this.state;
         return (
             <div>
-                 <Navbar color="faded" light expand="md">
+                 <Navbar color="faded" light expand="sm">
                         <NavbarBrand href="/">yaTube</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={true} navbar>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
                                 <InputGroup>
@@ -73,18 +69,17 @@ class HomePage extends React.Component {
                                     <InputGroupAddon addonType="append"><Button onClick={this.handleClick} color="secondary"><i className="fa fa-search"></i></Button></InputGroupAddon>
                                 </InputGroup>
                                 </NavItem>
-                            <NavItem>
-                                <NavLink href="https://github.com/morganster">Github</NavLink>
-                            </NavItem>
+                                <NavItem>
+                                    <NavLink href="https://github.com/morganster">Github</NavLink>
+                                </NavItem>
                             </Nav>
-                        </Collapse>
                 </Navbar>
                 <Container style={ {backgroundColor: '#333'}} fluid={true}>
-                    <Row>
+                   { !!this.props.videos.videoSelected.id && <Row>
                         <Col xs="12" sm="12" >
                             <YoutubePlayer onEnd={this.nextVid} />
                         </Col>
-                    </Row>
+                    </Row>}
                     <Row>
                         <Col xs="12" sm="12">
                             <VideoList />
