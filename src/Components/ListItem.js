@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Col,
   Row,
+  Media
   } from 'reactstrap';
 
 const ListItem = (props) => {
@@ -17,19 +18,19 @@ const ListItem = (props) => {
       color: '#fff',
       textAlign: 'center',
       top: '0.2em',
-      fontSize: '1.4em'
+      fontSize: '1.5vw'
     },
     subtitle:{
       color: '#fff',
       bottom: '0.05em',
       right: '0.05em',
-      fontSize: '0.95em'
+      fontSize: '1.1vw'
     },
     description:{
       color: '#fff',
       bottom: '0.05em',
       right: '0.05em',
-      fontSize: '0.85em'
+      fontSize: '1vw'
     },
     image: {
       cursor: 'pointer'
@@ -37,13 +38,13 @@ const ListItem = (props) => {
   };
     return(
       <Row onClick={props.onClick} style={styles.container}> 
-        <Col>
+        <Col md="6" sm="6" lg="12">
             <div>
-                <img src={props.thumbnail} alt={props.title} style={styles.image}/>
+                <img className="img-fluid" src={props.thumbnail} alt={props.title} style={styles.image}/>
             </div>
         </Col>
-        <Col>
-            <div>
+        <Col md="6" sm="6" lg="12">
+            <div >
               <p style={styles.title}>{props.title}</p>
               <p style={styles.subtitle}>{props.subtitle}</p>
               <p style={styles.description}>{props.description}</p>

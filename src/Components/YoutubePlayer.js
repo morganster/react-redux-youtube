@@ -33,16 +33,22 @@ class YoutubePlayer extends React.Component {
     
     render() {
         this.styles = {
-            padding: '0.5em 3em',
-            height: this.youtubeWidth * 0.57,
-            backgroundColor: '#222',
-            color: '#f3f3f3'
+            youtubeFrame : {
+                padding: '0.5em 3em',
+                height: this.youtubeWidth * 0.57,
+                backgroundColor: '#222',
+                color: '#f3f3f3'
+        },
+            cardBody: {
+                height: '100%'
+            },
+            
         };
         return (
             <div>
-                 <Card id="youtube-player__Frame" style={this.styles}>
-                        <CardBody>
-                            <YouTube  videoId={this.props.videos.videoSelected.id.videoId} opts={this.opts} onEnd={this.props.onEnd}/>
+                 <Card id="youtube-player__Frame" style={this.styles.youtubeFrame}>
+                        <CardBody style={this.styles.cardBody}>
+                            <YouTube  className="youtube-player" videoId={this.props.videos.videoSelected.id.videoId} opts={this.opts} onEnd={this.props.onEnd}/>
                         </CardBody>
                  </Card>
                  <Card id="youtube-player__info" style={{backgroundColor: '#222', color: '#f3f3f3'}}>

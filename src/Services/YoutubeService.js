@@ -7,7 +7,7 @@ export class YouTubeService {
     getVideosFromApi(searchTerm, related) {
       var options={
              maxResults :10,
-              key: 'here-goes-your-token',
+              key: 'AIzaSyDaKQ5Wk5C4KLF81e8L2uD6kjOamlFYxn0',
               type:'video'
           }
       if(related){
