@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css'
-import { HomePage } from './Components';
+import { HomePage } from './Containers';
 import registerServiceWorker from './registerServiceWorker';
 import { store } from './Helpers';
 

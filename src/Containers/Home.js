@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { YoutubePlayer } from './YoutubePlayer';
 import { VideoList } from './VideoList';
+import Loader from '../Components/Loader';
 import {
     Navbar,
     NavbarBrand,
@@ -86,6 +87,7 @@ class HomePage extends React.Component {
                         </Col>
                     </Row>
                 </Container>
+                {this.props.videos && this.props.videos.requesting && <Loader />}
         </div>
         );
     }

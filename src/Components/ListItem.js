@@ -1,8 +1,7 @@
 import React from 'react';
 import {
   Col,
-  Row,
-  Media
+  Row
   } from 'reactstrap';
 
 const ListItem = (props) => {

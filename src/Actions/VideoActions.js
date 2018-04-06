@@ -6,6 +6,7 @@ export const videoActions = {
     select,
     search,
     nextVideo,
+    paginateSearch
 };
 
 function select(video) {
@@ -48,6 +49,28 @@ function search(term, related = false, nextVid = false) {
     function success(result) { return { type: videoConstants.SEARCH_SUCCESS, result }}
 
     function failure(error) { return { type: videoConstants.SEARCH_FAILURE, error } }
+}
+// search more results to fill in the page
+function paginateSearch(term, nextPage) {
+    return dispatch => {
+        dispatch(request(term));
+
+        ytService.getVideosFromApi(term,false, nextPage)
+            .then(
+                videos => {
+                    dispatch(success(videos));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+
+    function request(term) { return { type: videoConstants.PAGINATE_SEARCH_REQUEST, term } }
+
+    function success(videos) { return { type: videoConstants.PAGINATE_SEARCH_SUCCESS, videos }}
+
+    function failure(error) { return { type: videoConstants.PAGINATE_SEARCH_FAILURE, error } }
 }
 
 function nextVideo(term){

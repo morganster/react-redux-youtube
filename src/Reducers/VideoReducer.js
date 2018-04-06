@@ -12,6 +12,7 @@ const initialState = {
     },
     requesting: false,
     nextPlayRequesting: false,
+    searchTerm: '',
 };
 
 export function videos(state = initialState, action) {
@@ -20,6 +21,7 @@ export function videos(state = initialState, action) {
             return {
                 ...state,
                 requesting: true,
+                searchTerm: action.term,
                 videoList: {}
             };
         case videoConstants.SEARCH_SUCCESS:
@@ -30,6 +32,27 @@ export function videos(state = initialState, action) {
                 nextPlayRequesting: action.result.nextVid,
             };
         case videoConstants.SEARCH_FAILURE:
+            return {
+                ...state,
+                requesting: false,
+                videoList: []
+                };
+        case videoConstants.PAGINATE_SEARCH_REQUEST:
+            return {
+                ...state,
+                searchTerm: action.term,
+                requesting: true
+            };
+        case videoConstants.PAGINATE_SEARCH_SUCCESS:
+            let items = state.videoList.items.concat(action.videos.items);
+            let videoList = {...state.videoList,...action.videos };
+            videoList.items = items;
+            return {
+                ...state,
+                requesting: false,
+                videoList: videoList
+                };
+        case videoConstants.PAGINATE_SEARCH_FAILURE:
             return {
                 ...state,
                 requesting: false,

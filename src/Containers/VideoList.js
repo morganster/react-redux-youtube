@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { videoActions } from '../Actions';
-import ListItem from './ListItem';
+import ListItem from '../Components/ListItem';
 import {
     Col,
     Row,
@@ -13,9 +13,23 @@ class VideoList extends React.Component {
         const  dispatch  = this.props.dispatch;
         dispatch(videoActions.search(''));
         this.selectVid = this.selectVid.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+        window.addEventListener('scroll', this.onScroll, false);
 
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false);
+      }
+
+    onScroll(){
+        if (
+          (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+          this.props.videos.videoList.items && this.props.videos.videoList.items.length && !this.props.videos.requesting
+        ) {
+          this.props.dispatch(videoActions.paginateSearch(this.props.videos.searchTerm, this.props.videos.videoList.nextPageToken));
+        }
+      }
     selectVid(video,e) {
         this.props.dispatch(videoActions.select(video));
         this.props.dispatch(videoActions.search(video.id.videoId, true));
